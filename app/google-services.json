@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "396472847869",
+    "firebase_url": "https://mediccityempresa-5f215.firebaseio.com",
+    "project_id": "mediccityempresa-5f215",
+    "storage_bucket": "mediccityempresa-5f215.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396472847869:android:082528727c093a8f",
+        "android_client_info": {
+          "package_name": "com.proyecto.sistemas.mediccityempresa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396472847869-4o4j31nkdt32qblk5srklu052bids3h2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.proyecto.sistemas.mediccityempresa",
+            "certificate_hash": "6313c13b0866bd9aed0574948c8f751d4932d651"
+          }
+        },
+        {
+          "client_id": "396472847869-l2m28qodov8tira5tpstseu2no72oegs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc_D5Hdj494liZ6yyydIJ6PbKg-qu6FcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396472847869-l2m28qodov8tira5tpstseu2no72oegs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
