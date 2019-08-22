@@ -140,6 +140,7 @@ public class UbicacionDoctores extends AppCompatActivity implements OnMapReadyCa
         mMap.addGroundOverlay(homeOverlay);
 
         LatLng home1 = new LatLng(-12.079090259913485, -77.04352535211485);
+
         GroundOverlayOptions homeOverlay1 = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
                 .position(home1, 150);

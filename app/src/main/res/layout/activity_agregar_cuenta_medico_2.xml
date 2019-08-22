@@ -19,7 +19,7 @@
         tools:visibility="visible" />
 
     <EditText
-        android:id="@+id/txtCorreo"
+        android:id="@+id/txtEspPrincipal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <EditText
-        android:id="@+id/editText12"
+        android:id="@+id/txtEspSecundaria"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -46,10 +46,10 @@
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCorreo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEspPrincipal" />
 
     <EditText
-        android:id="@+id/editText13"
+        android:id="@+id/txtCentroEstudios"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -61,11 +61,11 @@
         android:hint="Centro de Estudios"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText12" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEspSecundaria" />
 
 
     <EditText
-        android:id="@+id/editText15"
+        android:id="@+id/txtFinalizaEstudios"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -78,12 +78,12 @@
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText13" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCentroEstudios" />
 
 
 
     <EditText
-        android:id="@+id/editText16"
+        android:id="@+id/txtDetalles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -97,7 +97,7 @@
         android:hint="Detalles a brindar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText15" />
+        app:layout_constraintTop_toBottomOf="@+id/txtFinalizaEstudios" />
 
     <TextView
         android:id="@+id/textView"
@@ -109,7 +109,7 @@
         android:text="Agregar Ubicación :"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText16" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDetalles" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
@@ -125,7 +125,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnRegistrarMedico"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

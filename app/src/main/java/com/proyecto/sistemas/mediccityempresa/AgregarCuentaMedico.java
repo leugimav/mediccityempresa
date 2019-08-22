@@ -1,32 +1,24 @@
 package com.proyecto.sistemas.mediccityempresa;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.proyecto.sistemas.mediccityempresa.R;
 
 import java.util.UUID;
 
-public class AgregarCuentaMedico extends AppCompatActivity {
-    Button btnSiguiente;
+public class AgregarCuentaMedico extends AppCompatActivity implements View.OnClickListener {
+    private Button btnSiguiente;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -44,7 +36,7 @@ public class AgregarCuentaMedico extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_cuenta_medico);
 
         //Inicializamos el objeto firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseAuth = FirebaseAuth.getInstance();
 
         //Se referencia los Views
         txtCorreo = (EditText)findViewById(R.id.txtCorreo);
@@ -54,27 +46,70 @@ public class AgregarCuentaMedico extends AppCompatActivity {
         txtApellidos = (EditText)findViewById(R.id.txtApellidos);
         txtCelular = (EditText)findViewById(R.id.txtCelular);
         txtNroColegiatura = (EditText)findViewById(R.id.txtNroColegiatura);
+        btnSiguiente = findViewById(R.id.btnSiguiente);
+        btnSiguiente.setOnClickListener(this);
+        //inicializarFirebaseDatabase();
 
-        inicializarFirebaseDatabase();
+        //btnSiguiente = (Button)findViewById(R.id.btnSiguiente);
 
-        btnSiguiente = (Button)findViewById(R.id.btnSiguiente);
+        /*
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 registrarCuenta();
-                /*
-                Intent intent = new Intent(getApplicationContext(), AgregarCuentaMedico_2.class);
 
-                startActivity(intent);
-                finish();
-                */
+                //Intent intent = new Intent(getApplicationContext(), AgregarCuentaMedico_2.class);
+
+                //startActivity(intent);
+                //finish();
+
             }
-        });
+        }); */
 
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btnSiguiente:
+
+                //Se realiza la validación de los datos ingresados
+                if(!TextUtils.isEmpty(txtCorreo.getText().toString()) && !TextUtils.isEmpty(txtClave.getText().toString()) &&
+                        !TextUtils.isEmpty(txtClave.getText().toString()) && !TextUtils.isEmpty(txtNombres.getText().toString()) &&
+                        !TextUtils.isEmpty(txtApellidos.getText().toString()) && !TextUtils.isEmpty(txtCelular.getText().toString()) &&
+                        !TextUtils.isEmpty(txtNroColegiatura.getText().toString()))
+                {
+                    Intent intent = new Intent(getApplicationContext(), AgregarCuentaMedico_2.class);
+                    intent.putExtra("correo", txtCorreo.getText().toString());
+                    intent.putExtra("clave",  txtClave.getText().toString());
+                    intent.putExtra("nombres", txtNombres.getText().toString());
+                    intent.putExtra("apellidos", txtApellidos.getText().toString());
+                    intent.putExtra("celular", txtCelular.getText().toString());
+                    intent.putExtra("colegiatura", txtNroColegiatura.getText().toString());
+                    startActivity(intent);
+                }
+                else
+                {
+                    if(txtClave.getText().toString().length() < 6)
+                    {
+                        Toast.makeText(this, "La Clave debe tener al menos 6 caracteres", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(this, "Debe Ingresar Todos los Datos Completos", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            break;
+
+        }
+
+    }
+
+
+
+    /*
     private void inicializarFirebaseDatabase()
     {
         //FirebaseApp.initializeApp(this);
@@ -82,6 +117,11 @@ public class AgregarCuentaMedico extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
 
     }
+*/
+
+
+
+
 
     private void registrarCuenta() {
         //Se obtiene el Email y Contraseña
@@ -102,6 +142,7 @@ public class AgregarCuentaMedico extends AppCompatActivity {
         progressDialog.show();
 
         //Creando Usuario
+        /*
         firebaseAuth.createUserWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -125,7 +166,7 @@ public class AgregarCuentaMedico extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 });
-
+*/
 
         Medico medico = new Medico();
         medico.setUid(UUID.randomUUID().toString());

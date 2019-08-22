@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.proyecto.sistemas.mediccityempresa.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnIngresar;
     Button btnRecuperarClave;
@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtPassword;
     private ProgressDialog progressDialog;
 
+    private String Email;
+    private String Password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +49,25 @@ public class MainActivity extends AppCompatActivity {
         btnIngresar =(Button)findViewById(R.id.btnIngresar);
         btnRecuperarClave = (Button)findViewById(R.id.btnRecuperarClave);
 
+        btnIngresar.setOnClickListener(this);
+        btnRecuperarClave.setOnClickListener(this);
+        /*
         btnIngresar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
                 ingresarCuenta();
-                /*
-                Intent intent = new Intent(getApplicationContext(), UbicacionDoctores.class);
 
-                startActivity(intent);
-                finish();
-                */
+                //Intent intent = new Intent(getApplicationContext(), UbicacionDoctores.class);
+
+                //startActivity(intent);
+                //finish();
+
             }
         });
+        */
 
-        btnRecuperarClave.setOnClickListener(new View.OnClickListener(){
+        /*btnRecuperarClave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
@@ -72,26 +78,46 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        });
+        //});
+        */
+
+    }
 
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.btnIngresar:
+                ingresarCuenta();
+                break;
+
+            case R.id.btnRecuperarClave:
+                recuperarClave();
+                break;
+
+        }
     }
 
     private void ingresarCuenta()
     {
         //Se obtiene el Email y Contraseña
-        String Email = txtEmail.getText().toString();
-        String Password = txtPassword.getText().toString();
+        Email = txtEmail.getText().toString();
+        Password = txtPassword.getText().toString();
 
-        if(TextUtils.isEmpty(Email)){
-            Toast.makeText(this,"Ingresar Email Válido",Toast.LENGTH_LONG).show();
+        if(!TextUtils.isEmpty(Email) && !TextUtils.isEmpty(Password)  ){
+            LoginUsuario();
+        }
+        else
+        {
+            Toast.makeText(this,"Completar los Datos del Usuario y Password",Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(Password)){
-            Toast.makeText(this,"Ingresar Password Válido",Toast.LENGTH_LONG).show();
-            return;
-        }
+
+    }
+
+    private void LoginUsuario()
+    {
 
         progressDialog.setMessage("Validando Usuario ...");
         progressDialog.show();
@@ -102,27 +128,27 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-
-                            Toast.makeText(MainActivity.this,"Accesos ingresados correctos"+ txtEmail.getText(),Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(MainActivity.this,VisualizarDatos.class));
+                            finish();
+                            //Toast.makeText(MainActivity.this,"Accesos ingresados correctos"+ txtEmail.getText(),Toast.LENGTH_LONG).show();
                         }else{
 
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException)
-                            {//si se presenta una colisión
-                                Toast.makeText(MainActivity.this, "El Usuario ya se encuentra registrado", Toast.LENGTH_SHORT).show();
-                            } else {
-                                //Toast.makeText(MainActivity.this, "No se pudo registrar el usuario ", Toast.LENGTH_LONG).show();
-                                Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                                Log.e("Activity","Problemas Error: " + task.getException().getMessage());
+                            Toast.makeText(MainActivity.this,"No se pudo inicar sesión - " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
 
                             }
 
                         }
-                        progressDialog.dismiss();
-                    }
-                });
 
+                });
+        progressDialog.dismiss();
     }
+
+    private void recuperarClave()
+    {
+        startActivity(new Intent(MainActivity.this,RecuperarContrasena.class));
     }
+
+}
 
 
 
