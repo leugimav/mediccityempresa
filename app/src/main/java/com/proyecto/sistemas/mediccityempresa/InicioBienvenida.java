@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 public class InicioBienvenida extends Activity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,7 @@ public class InicioBienvenida extends Activity {
                 startActivity(intent);
             }
         },3000);*/
+
 
         //Intent intent = new Intent(this,MainActivity.class);
         Intent intent = new Intent(this,Principal.class);

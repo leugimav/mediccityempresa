@@ -70,7 +70,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/button_transp"
-        android:text="INICIAR SESIÓN"
+        android:text="YA TENGO CUENTA"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 
         android:textColor="#161515"

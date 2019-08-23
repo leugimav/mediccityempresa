@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.proyecto.sistemas.mediccityempresa.R;
 
 public class Principal extends AppCompatActivity {
-
+    private FirebaseAuth firebaseAuth;
     Button btnNuevaCuenta;
     Button btnIngresar;
 
@@ -45,6 +46,22 @@ public class Principal extends AppCompatActivity {
                 finish();
             }
         });
+
+        //Inicializamos el objeto firebaseAuth
+        firebaseAuth = FirebaseAuth.getInstance();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(firebaseAuth.getCurrentUser() != null)
+        {
+            startActivity(new Intent(Principal.this,VisualizarDatos.class));
+            finish();
+
+        }
 
     }
 }

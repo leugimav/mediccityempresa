@@ -97,7 +97,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        if(firebaseAuth.getCurrentUser() != null)
+        {
+            startActivity(new Intent(MainActivity.this,VisualizarDatos.class));
+            finish();
+
+        }
+
+    }
+
+
+*/
     private void ingresarCuenta()
     {
         //Se obtiene el Email y Contraseña
