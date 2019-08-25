@@ -143,8 +143,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //startActivity(new Intent(MainActivity.this,VisualizarDatos.class));
-                            startActivity(new Intent(MainActivity.this,UbicacionDoctores.class));
+                            startActivity(new Intent(MainActivity.this,VisualizarDatos.class));
+                            //startActivity(new Intent(MainActivity.this,UbicacionDoctores.class));
                             finish();
                             //Toast.makeText(MainActivity.this,"Accesos ingresados correctos"+ txtEmail.getText(),Toast.LENGTH_LONG).show();
                         }else{
@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void recuperarClave()
     {
-        //startActivity(new Intent(MainActivity.this,RecuperarContrasena.class));
-        startActivity(new Intent(MainActivity.this,AgregarCuentaMedico_2.class));
+        startActivity(new Intent(MainActivity.this,RecuperarContrasena.class));
+
     }
 
 }

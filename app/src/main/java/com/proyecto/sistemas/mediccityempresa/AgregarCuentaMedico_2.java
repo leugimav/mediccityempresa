@@ -21,7 +21,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -36,7 +35,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Map;
 
 public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
@@ -49,8 +47,9 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     //Mapa
-    GoogleMap googleMap;
+    GoogleMap mMap;
     MapView ubicacionDoctor;
+    LatLng latitudLongitud;
 
     //
     private String correo, clave, nombres, apellidos, celular, colegiatura;
@@ -102,17 +101,16 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
         ubicacionDoctor.getMapAsync(this);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        UbicacionActual();
+        //UbicacionActual();
 
 
         //Se captura los datos enviados desde AgregarCuentaMedico.java
-        /*
         correo = getIntent().getExtras().getString("correo");
         clave = getIntent().getExtras().getString("clave");
         nombres = getIntent().getExtras().getString("nombres");
         apellidos = getIntent().getExtras().getString("apellidos");
         celular = getIntent().getExtras().getString("celular");
-        colegiatura = getIntent().getExtras().getString("colegiatura");*/
+        colegiatura = getIntent().getExtras().getString("colegiatura");
 
         //
         progressDialog = new ProgressDialog(this);
@@ -173,8 +171,8 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
                             medico.setCentroEstudios(txtCentroEstudios.getText().toString());
                             medico.setFinalizaEstudios(txtFinalizaEstudios.getText().toString());
                             medico.setDetalles(txtDetalles.getText().toString());
-                            medico.setLatitud("15.152471");
-                            medico.setLongitud("20.145475");
+                            medico.setLatitud(Latitud);
+                            medico.setLongitud(Longitud);
                             medico.setTipo("M"); //Medico
 
                             databaseReference.child("Medico").child(id).setValue(medico).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -184,7 +182,8 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
 
                                         Toast.makeText(AgregarCuentaMedico_2.this, "Se Registró el Usuario con el Email: " + correo, Toast.LENGTH_LONG).show();
                                         //LimpiarTextos();
-                                        startActivity(new Intent(AgregarCuentaMedico_2.this, Principal.class));
+                                        //startActivity(new Intent(AgregarCuentaMedico_2.this, Principal.class));
+                                        startActivity(new Intent(AgregarCuentaMedico_2.this, VisualizarDatos.class));
                                         finish();
                                     } else {
                                         Toast.makeText(AgregarCuentaMedico_2.this, "Hubo problemas al realizar el Registro", Toast.LENGTH_LONG).show();
@@ -232,6 +231,13 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
+                            latitudLongitud = new LatLng(location.getLatitude(),location.getLongitude());
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudLongitud, 15));
+                            mMap.addMarker(new MarkerOptions()
+                                    .title("Mi Ubicación")
+                                    .position(latitudLongitud));
+
+                          //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latitudLongitud));
                             Log.e("Latitud :" , + location.getLatitude() + " Longitud : " + location.getLongitude());
 
                         }
@@ -245,22 +251,53 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        //mMap = googleMap;
+        //if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        //        != PackageManager.PERMISSION_GRANTED ) {
+        //    return;
+        //}
 
-        googleMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED ) {
+        //mMap.setMyLocationEnabled(true);
+        //LatLng referenciaLatLng= new LatLng(-12.117895, -77.025463);
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(referenciaLatLng, 15));//18
+
+        mMap = googleMap;
+
+        if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) &&
+                (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED)) {
+
+            ActivityCompat.requestPermissions(AgregarCuentaMedico_2.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            //Log.e("No hay permiso" , "No hay permiso.....");
             return;
+
+
         }
 
-        googleMap.setMyLocationEnabled(true);
-        LatLng referenciaLatLng= new LatLng(-12.117895, -77.025463);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(referenciaLatLng, 15));//18
-        /*
-        googleMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
-                .title("Mercado numero 1 Surquillo")
-                .position(referenciaLatLng));
-                */
+        fusedLocationProviderClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            latitudLongitud = new LatLng(location.getLatitude(),location.getLongitude());
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudLongitud, 15));
+                            mMap.addMarker(new MarkerOptions()
+                                    .title("Mi Ubicación")
+                                    .position(latitudLongitud)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                            //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latitudLongitud));
+                            Latitud =  Double.toString(location.getLatitude()) ;
+                            Longitud = Double.toString(location.getLongitude());
+                            Log.e("Latitud :" , + location.getLatitude() + " Longitud : " + location.getLongitude());
+
+                        }
+                    }
+
+                });
+
     }
 
 

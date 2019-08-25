@@ -54,6 +54,8 @@
         android:id="@+id/btnCerrarSesion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_ing"
+        android:textColor="#F1EDED"
         android:text="Cerrar Sesión" />
 
 </LinearLayout>
