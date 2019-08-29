@@ -1,4 +1,4 @@
-package com.proyecto.sistemas.mediccityempresa;
+package com.proyecto.sistemas.mediccityempresa.data.entities;
 
 public class Medico {
 
