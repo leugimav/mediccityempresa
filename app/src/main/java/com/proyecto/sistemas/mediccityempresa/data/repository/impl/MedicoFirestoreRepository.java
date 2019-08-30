@@ -6,19 +6,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.proyecto.sistemas.mediccityempresa.data.entities.Medico;
-import com.proyecto.sistemas.mediccityempresa.data.repository.IPostFirestoreRepository;
+import com.proyecto.sistemas.mediccityempresa.data.repository.IMedicoFirestoreRepository;
 import com.proyecto.sistemas.mediccityempresa.presentation.utils.FirestoreConstants;
 
 import javax.inject.Inject;
 
-public class PostFirestoreRepositoryImpl implements IPostFirestoreRepository {
+public class MedicoFirestoreRepository implements IMedicoFirestoreRepository {
 
     private final FirebaseFirestore firestore;
 
     @Inject
-    public PostFirestoreRepositoryImpl(FirebaseFirestore firestore) {
+    public MedicoFirestoreRepository(FirebaseFirestore firestore) {
         this.firestore = firestore;
     }
+
 
     @Override
     public void getMedico(String uid, OnCompleteListener<DocumentSnapshot> onComplete) {

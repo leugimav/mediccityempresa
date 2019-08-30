@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.proyecto.sistemas.mediccityempresa.data.entities.Medico;
 
-public interface IPostFirestoreRepository {
+public interface IMedicoFirestoreRepository {
 
 
     void getMedico(String uid,  OnCompleteListener<DocumentSnapshot> onComplete);

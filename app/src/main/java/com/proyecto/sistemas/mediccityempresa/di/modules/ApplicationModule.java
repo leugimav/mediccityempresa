@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.proyecto.sistemas.mediccityempresa.data.repository.IPostFirestoreRepository;
+import com.proyecto.sistemas.mediccityempresa.data.repository.IMedicoFirestoreRepository;
 import com.proyecto.sistemas.mediccityempresa.data.repository.impl.PostFirestoreRepositoryImpl;
 
 import javax.inject.Singleton;
@@ -26,7 +26,7 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    IPostFirestoreRepository providePostFirestoreRepository(PostFirestoreRepositoryImpl postFirestoreRepositoryImpl){
+    IMedicoFirestoreRepository providePostFirestoreRepository(PostFirestoreRepositoryImpl postFirestoreRepositoryImpl){
         return postFirestoreRepositoryImpl;
     }
 
