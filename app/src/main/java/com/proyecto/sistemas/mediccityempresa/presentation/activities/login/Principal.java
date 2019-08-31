@@ -1,4 +1,4 @@
-package com.proyecto.sistemas.mediccityempresa;
+package com.proyecto.sistemas.mediccityempresa.presentation.activities.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.proyecto.sistemas.mediccityempresa.presentation.activities.create_medico_firestore.AgregarCuentaMedico;
 import com.proyecto.sistemas.mediccityempresa.R;
+import com.proyecto.sistemas.mediccityempresa.VisualizarDatos;
 
 public class Principal extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-    Button btnNuevaCuenta;
-    Button btnIngresar;
+    private Button btnNuevaCuenta;
+    private Button btnIngresar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class Principal extends AppCompatActivity {
 
         if(firebaseAuth.getCurrentUser() != null)
         {
-            startActivity(new Intent(Principal.this,VisualizarDatos.class));
+            startActivity(new Intent(Principal.this, VisualizarDatos.class));
             finish();
 
         }

@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
-import com.proyecto.sistemas.mediccityempresa.R;
 
 
 import java.util.Locale;

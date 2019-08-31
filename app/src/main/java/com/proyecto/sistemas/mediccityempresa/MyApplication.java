@@ -3,7 +3,9 @@ package com.proyecto.sistemas.mediccityempresa;
 import android.app.Application;
 
 import com.proyecto.sistemas.mediccityempresa.di.components.ApplicationComponent;
+import com.proyecto.sistemas.mediccityempresa.di.components.DaggerApplicationComponent;
 import com.proyecto.sistemas.mediccityempresa.di.modules.ApplicationModule;
+
 
 public class MyApplication extends Application {
 

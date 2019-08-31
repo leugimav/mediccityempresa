@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.proyecto.sistemas.mediccityempresa.data.repository.IMedicoFirestoreRepository;
 import com.proyecto.sistemas.mediccityempresa.di.modules.ApplicationModule;
 
 import javax.inject.Singleton;
@@ -14,6 +15,7 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     Context exposeContext();
+    IMedicoFirestoreRepository exposePostFirestoreRepository();
     FirebaseAuth exposeFirebaseAuth();
     FirebaseFirestore exposeFirestore();
 }

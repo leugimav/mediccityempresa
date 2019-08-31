@@ -11,12 +11,12 @@ import com.proyecto.sistemas.mediccityempresa.presentation.utils.FirestoreConsta
 
 import javax.inject.Inject;
 
-public class MedicoFirestoreRepository implements IMedicoFirestoreRepository {
+public class MedicoFirestoreRepositoryImp implements IMedicoFirestoreRepository {
 
     private final FirebaseFirestore firestore;
 
     @Inject
-    public MedicoFirestoreRepository(FirebaseFirestore firestore) {
+    public MedicoFirestoreRepositoryImp(FirebaseFirestore firestore) {
         this.firestore = firestore;
     }
 

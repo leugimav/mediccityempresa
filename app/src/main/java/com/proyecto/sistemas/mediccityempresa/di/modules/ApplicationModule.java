@@ -5,12 +5,14 @@ import android.content.Context;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.proyecto.sistemas.mediccityempresa.data.repository.IMedicoFirestoreRepository;
-import com.proyecto.sistemas.mediccityempresa.data.repository.impl.PostFirestoreRepositoryImpl;
+import com.proyecto.sistemas.mediccityempresa.data.repository.impl.MedicoFirestoreRepositoryImp;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 
+@Module
 public class ApplicationModule {
 
     private Context mContext;
@@ -26,7 +28,7 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    IMedicoFirestoreRepository providePostFirestoreRepository(PostFirestoreRepositoryImpl postFirestoreRepositoryImpl){
+    IMedicoFirestoreRepository providePostsFirestoreInteractorprovidePostFirestoreRepository(MedicoFirestoreRepositoryImp postFirestoreRepositoryImpl){
         return postFirestoreRepositoryImpl;
     }
 

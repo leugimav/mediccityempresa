@@ -12,4 +12,5 @@
     <string name="dropped_pin">Dropped Pin</string>
     <string name="poi">poi</string>
     <string name="title_activity_ubicacion_medico">Map</string>
+
 </resources>

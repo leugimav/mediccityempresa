@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context="com.proyecto.sistemas.mediccityempresa.Principal">
+    tools:context="com.proyecto.sistemas.mediccityempresa.presentation.activities.login.Principal">
 
     <ImageView
         android:id="@+id/imageView3"

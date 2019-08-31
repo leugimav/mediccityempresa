@@ -1,4 +1,4 @@
-package com.proyecto.sistemas.mediccityempresa.domain.create_post_firestore;
+package com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentReference;

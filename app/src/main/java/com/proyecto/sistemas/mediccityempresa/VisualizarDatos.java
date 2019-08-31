@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.proyecto.sistemas.mediccityempresa.presentation.activities.login.Principal;
 
 public class VisualizarDatos extends AppCompatActivity implements View.OnClickListener{
 
@@ -48,7 +49,7 @@ public class VisualizarDatos extends AppCompatActivity implements View.OnClickLi
         switch(v.getId()) {
             case R.id.btnCerrarSesion:
                 firebaseSignOut.signOut();
-                startActivity(new Intent(VisualizarDatos.this,Principal.class));
+                startActivity(new Intent(VisualizarDatos.this, Principal.class));
                 finish();
                 break;
 

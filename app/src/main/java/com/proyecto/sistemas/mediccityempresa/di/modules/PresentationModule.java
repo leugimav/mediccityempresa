@@ -2,8 +2,12 @@ package com.proyecto.sistemas.mediccityempresa.di.modules;
 
 import com.proyecto.sistemas.mediccityempresa.data.repository.IMedicoFirestoreRepository;
 import com.proyecto.sistemas.mediccityempresa.di.scope.PerActivity;
-import com.proyecto.sistemas.mediccityempresa.domain.create_post_firestore.CreateMedicoFirestoreInteractorImpl;
-import com.proyecto.sistemas.mediccityempresa.domain.create_post_firestore.ICreateMedicoFirestoreInteractor;
+import com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore.CreateMedicoFirestoreInteractorImpl;
+import com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore.ICreateMedicoFirestoreInteractor;
+import com.proyecto.sistemas.mediccityempresa.domain.medico_detail_firestore_interactor.IMedicoDetailFirestoreInteractor;
+import com.proyecto.sistemas.mediccityempresa.domain.medico_detail_firestore_interactor.MedicoDetailFirestoreInteractorImpl;
+import com.proyecto.sistemas.mediccityempresa.domain.medico_firestore_interactor.IMedicoFirestoreInteractor;
+import com.proyecto.sistemas.mediccityempresa.domain.medico_firestore_interactor.MedicoFirestoreInteractorImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,15 +26,15 @@ public class PresentationModule {
     //Obtener Detalle Medico
     @PerActivity
     @Provides
-    IPostDetailFirestoreInteractor providePostDetailFirestoreInteractor(IMedicoFirestoreRepository repository){
-        return new PostDetailFirestoreInteractorImpl(repository);
+    IMedicoDetailFirestoreInteractor providePostDetailFirestoreInteractor(IMedicoFirestoreRepository repository){
+        return new MedicoDetailFirestoreInteractorImpl(repository);
     }
 
     //Lista Medico
     @PerActivity
     @Provides
-    IPostsFirestoreInteractor providePostsFirestoreInteractor(IMedicoFirestoreRepository repository){
-        return new PostFirestoreInteractorImpl(repository);
+    IMedicoFirestoreInteractor providePostsFirestoreInteractor(IMedicoFirestoreRepository repository){
+        return new MedicoFirestoreInteractorImpl(repository);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.proyecto.sistemas.mediccityempresa.domain.create_post_firestore;
+package com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -11,15 +11,17 @@ public class CreateMedicoFirestoreInteractorImpl implements ICreateMedicoFiresto
 
     private final IMedicoFirestoreRepository repository;
 
-    @Override
-    public void createMedico(Medico medico, OnCompleteListener<DocumentReference> onComplete) {
-
-    }
-
     @Inject
     public CreateMedicoFirestoreInteractorImpl(IMedicoFirestoreRepository repository)
     {
         this.repository = repository;
     }
+
+    @Override
+    public void createMedico(Medico medico, OnCompleteListener<DocumentReference> onComplete) {
+        repository.registrarMedico(medico, onComplete);
+    }
+
+
 
 }

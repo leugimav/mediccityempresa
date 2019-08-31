@@ -1,4 +1,4 @@
-package com.proyecto.sistemas.mediccityempresa;
+package com.proyecto.sistemas.mediccityempresa.presentation.activities.create_medico_firestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +33,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.proyecto.sistemas.mediccityempresa.R;
+import com.proyecto.sistemas.mediccityempresa.VisualizarDatos;
 import com.proyecto.sistemas.mediccityempresa.data.entities.Medico;
 
 

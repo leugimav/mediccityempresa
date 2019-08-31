@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.proyecto.sistemas.mediccityempresa.R;
+
 
 public class AgregarComentario extends AppCompatActivity {
 
