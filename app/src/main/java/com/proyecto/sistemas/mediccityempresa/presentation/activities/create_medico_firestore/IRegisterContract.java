@@ -6,7 +6,7 @@ public interface IRegisterContract {
         void showError(String errorMsg);
         void showProgressDialog();
         void hideProgressDialog();
-        void goToMenu();
+        void goToMenu(String id);
         void onSuccessCreate(); ///////////////////
 
     }
@@ -16,7 +16,7 @@ public interface IRegisterContract {
         void attachView(IView view);
         void detachView();
         boolean isViewAttached();
-        void register(String username, String password , String apellidos,String celuar,String nrocolegiatura,String espPrincipal,String espSecundaria,String centroEstudios,String finalizaEstudios,String detalles,String latitud,String longitud,String tipo);
+        void register(String username, String password , String nombres, String apellidos,String celuar,String nrocolegiatura,String espPrincipal,String espSecundaria,String centroEstudios,String finalizaEstudios,String detalles,String latitud,String longitud,String tipo);
 
     }
 }

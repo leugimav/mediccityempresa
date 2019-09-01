@@ -2,8 +2,8 @@ package com.proyecto.sistemas.mediccityempresa.di.modules;
 
 import com.proyecto.sistemas.mediccityempresa.data.repository.IMedicoFirestoreRepository;
 import com.proyecto.sistemas.mediccityempresa.di.scope.PerActivity;
-import com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore.CreateMedicoFirestoreInteractorImpl;
-import com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore.ICreateMedicoFirestoreInteractor;
+import com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore_interactor.CreateMedicoFirestoreInteractorImpl;
+import com.proyecto.sistemas.mediccityempresa.domain.create_medico_firestore_interactor.ICreateMedicoFirestoreInteractor;
 import com.proyecto.sistemas.mediccityempresa.domain.medico_detail_firestore_interactor.IMedicoDetailFirestoreInteractor;
 import com.proyecto.sistemas.mediccityempresa.domain.medico_detail_firestore_interactor.MedicoDetailFirestoreInteractorImpl;
 import com.proyecto.sistemas.mediccityempresa.domain.medico_firestore_interactor.IMedicoFirestoreInteractor;

@@ -28,7 +28,8 @@ public class MedicoFirestoreRepositoryImp implements IMedicoFirestoreRepository 
 
     @Override
     public void registrarMedico(Medico medico, OnCompleteListener<DocumentReference> onComplete) {
-        firestore.collection(FirestoreConstants.COLLECTION_POSTS).add(medico).addOnCompleteListener(onComplete);
+        //firestore.collection(FirestoreConstants.COLLECTION_POSTS).add(medico).addOnCompleteListener(onComplete);
+        firestore.collection(FirestoreConstants.COLLECTION_POSTS).document(medico.getUid()).set(medico);
     }
 
     @Override

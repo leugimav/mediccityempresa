@@ -1,24 +1,14 @@
 package com.proyecto.sistemas.mediccityempresa.presentation.activities.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.proyecto.sistemas.mediccityempresa.R;
 import com.proyecto.sistemas.mediccityempresa.RecuperarContrasena;
-import com.proyecto.sistemas.mediccityempresa.VisualizarDatos;
+import com.proyecto.sistemas.mediccityempresa.presentation.activities.detalle_medico_firestore.VisualizarDatos;
 import com.proyecto.sistemas.mediccityempresa.base.BaseActivity;
 import com.proyecto.sistemas.mediccityempresa.di.components.DaggerPresentationComponent;
 import com.proyecto.sistemas.mediccityempresa.di.modules.PresentationModule;
@@ -88,6 +78,7 @@ public class MainActivity extends BaseActivity implements ILoginContract.IView {
 
     @Override
     public void goToMenu() {
+
         Intent intent = new Intent(getApplicationContext() , VisualizarDatos.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

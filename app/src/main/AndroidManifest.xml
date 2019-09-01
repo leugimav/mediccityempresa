@@ -34,17 +34,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".UbicacionMedico"
-            android:label="@string/title_activity_ubicacion_medico"></activity>
-        <activity android:name=".VisualizarDatos" />
-        <activity android:name=".AgregarCuentaMedico_3" />
+        <activity android:name=".presentation.activities.detalle_medico_firestore.VisualizarDatos" />
         <activity android:name=".presentation.activities.create_medico_firestore.AgregarCuentaMedico_2" />
         <activity android:name=".RecuperarContrasena" />
-        <activity android:name=".AgregarComentario" />
-        <activity
-            android:name=".UbicacionDoctores"
-            android:label="@string/title_activity_ubicacion_doctores" />
         <activity android:name=".presentation.activities.create_medico_firestore.AgregarCuentaMedico" />
         <activity
             android:name=".presentation.activities.login.Principal"

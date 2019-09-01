@@ -1,17 +1,13 @@
 package com.proyecto.sistemas.mediccityempresa.presentation.activities.create_medico_firestore;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,28 +21,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.proyecto.sistemas.mediccityempresa.R;
-import com.proyecto.sistemas.mediccityempresa.VisualizarDatos;
-import com.proyecto.sistemas.mediccityempresa.data.entities.Medico;
+import com.proyecto.sistemas.mediccityempresa.presentation.activities.detalle_medico_firestore.VisualizarDatos;
+import com.proyecto.sistemas.mediccityempresa.base.BaseActivity;
+import com.proyecto.sistemas.mediccityempresa.di.components.DaggerPresentationComponent;
+import com.proyecto.sistemas.mediccityempresa.di.modules.PresentationModule;
+
+import javax.inject.Inject;
 
 
-public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+public class AgregarCuentaMedico_2 extends BaseActivity implements IRegisterContract.IView, OnMapReadyCallback {
 
     //Firebase
-    private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
-    private DatabaseReference databaseReference;
+    //private FirebaseAuth firebaseAuth;
+    //private ProgressDialog progressDialog;
+    //private DatabaseReference databaseReference;
 
     //Permisos
-    private FusedLocationProviderClient fusedLocationProviderClient;
+    //private FusedLocationProviderClient fusedLocationProviderClient;
 
     //Mapa
     GoogleMap mMap;
@@ -60,51 +53,46 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
     private EditText txtCentroEstudios;
     private EditText txtFinalizaEstudios;
     private EditText txtDetalles;
-    private String Latitud; //EditText
-    private String Longitud; //EditText
-
     private Button btnRegistrarMedico;
-
+    private String Latitud;
+    private String Longitud;
     private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ubicacionDoctor.onResume();
-    }
+    //Permisos
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ubicacionDoctor.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        ubicacionDoctor.onPause();
-    }
+    @Inject
+    RegisterPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agregar_cuenta_medico_2);
+    }
 
-        //Inicializamos el objeto firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_agregar_cuenta_medico_2;
+    }
+
+    @Override
+    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
+        super.onViewReady(savedInstanceState, intent);
+        presenter.attachView(this);
+        getWindow().setBackgroundDrawable(null);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        txtEspPrincipal = findViewById(R.id.txtEspPrincipal);
+        txtEspSecundaria = findViewById(R.id.txtEspSecundaria);
+        txtCentroEstudios = findViewById(R.id.txtCentroEstudios);
+        txtFinalizaEstudios = findViewById(R.id.txtFinalizaEstudios);
+        txtDetalles = findViewById(R.id.txtDetalles);
+        btnRegistrarMedico = findViewById(R.id.btnRegistrarMedico);
 
         //Inicializamos Mapa - Location
         ubicacionDoctor = (MapView)findViewById(R.id.mapView);
         ubicacionDoctor.onCreate(savedInstanceState);
-
-
-        //googleMap = ubicacionDoctor.getMapAsync(this);
         ubicacionDoctor.getMapAsync(this);
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        //UbicacionActual();
-
 
         //Se captura los datos enviados desde AgregarCuentaMedico.java
         correo = getIntent().getExtras().getString("correo");
@@ -114,154 +102,97 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
         celular = getIntent().getExtras().getString("celular");
         colegiatura = getIntent().getExtras().getString("colegiatura");
 
-        //
-        progressDialog = new ProgressDialog(this);
 
-        //
-        txtEspPrincipal = findViewById(R.id.txtEspPrincipal);
-        txtEspSecundaria = findViewById(R.id.txtEspSecundaria);
-        txtCentroEstudios = findViewById(R.id.txtCentroEstudios);
-        txtFinalizaEstudios = findViewById(R.id.txtFinalizaEstudios);
-        txtDetalles = findViewById(R.id.txtDetalles);
-        btnRegistrarMedico = findViewById(R.id.btnRegistrarMedico);
-        btnRegistrarMedico.setOnClickListener(this);
-
+        setListeners();
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnRegistrarMedico:
-                registrarMedico();
-                break;
+    protected void resolveDaggerDependency() {
+        DaggerPresentationComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .presentationModule(new PresentationModule())
+                .build().inject(this);
+    }
 
-        }
+    @Override
+    public void showError(String errorMsg) {
+        Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        showDialog("Cargando");
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        hideDialog();
+    }
+
+    @Override
+    public void goToMenu(String uid) {
+        Intent intent = new Intent(getApplicationContext() , VisualizarDatos.class);
+        intent.putExtra("medico_id",uid);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //presenter.detachView();
+        ubicacionDoctor.onDestroy();
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        presenter.detachView();
+        super.onDetachedFromWindow();
+    }
+
+    private void setListeners(){
+        btnRegistrarMedico.setOnClickListener(v -> {
+            String espPrincipal = txtEspPrincipal.getText().toString();
+            String espSecundaria = txtEspSecundaria.getText().toString();
+            String centroEstudios = txtCentroEstudios.getText().toString();
+            String finalizaEstudios = txtFinalizaEstudios.getText().toString();
+            String detalles = txtDetalles.getText().toString();
+            String latitud = Latitud;
+            String longitud = Longitud;
+            String tipo = "M";
+            presenter.register(correo,clave,nombres,apellidos,celular,colegiatura,espPrincipal,espSecundaria,centroEstudios,finalizaEstudios,detalles,latitud,longitud,tipo);
+        });
     }
 
 
-    public void registrarMedico() {
 
-        progressDialog.setMessage("Validando Usuario ...");
-        progressDialog.show();
 
-        //Creando Usuario
-        firebaseAuth.createUserWithEmailAndPassword(correo, clave)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
 
-                            //Toast.makeText(AgregarCuentaMedico_2.this,"Se Registró el Usuario con el Email: "+ correo,Toast.LENGTH_LONG).show();
-                            //Se obtiene el Id de Autenticación del Usuario
-                            String id = firebaseAuth.getUid();
+    @Override
+    public void onSuccessCreate() {
+        Toast.makeText(getApplicationContext(), "Se registró el Usuario", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 
-                            Medico medico = new Medico();
-                            //medico.setUid(UUID.randomUUID().toString());
-                            //medico.setNombres(txtNombres.getText().toString());
-                            //medico.setApellidos(txtApellidos.getText().toString());
-                            //medico.setCelular(txtCelular.getText().toString());
-                            //medico.setNroColegiatura(txtNroColegiatura.getText().toString());
-
-                            medico.setUid(id);
-                            medico.setCorreo(correo);
-                            medico.setNombres(nombres);
-                            medico.setApellidos(apellidos);
-                            medico.setCelular(celular);
-                            medico.setNroColegiatura(colegiatura);
-                            medico.setEspPrincipal(txtEspPrincipal.getText().toString());
-                            medico.setEspSecundaria(txtEspSecundaria.getText().toString());
-                            medico.setCentroEstudios(txtCentroEstudios.getText().toString());
-                            medico.setFinalizaEstudios(txtFinalizaEstudios.getText().toString());
-                            medico.setDetalles(txtDetalles.getText().toString());
-                            medico.setLatitud(Latitud);
-                            medico.setLongitud(Longitud);
-                            medico.setTipo("M"); //Medico
-
-                            databaseReference.child("Medico").child(id).setValue(medico).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> taskdb) {
-                                    if (taskdb.isSuccessful()) {
-
-                                        Toast.makeText(AgregarCuentaMedico_2.this, "Se Registró el Usuario con el Email: " + correo, Toast.LENGTH_LONG).show();
-                                        //LimpiarTextos();
-                                        //startActivity(new Intent(AgregarCuentaMedico_2.this, Principal.class));
-                                        startActivity(new Intent(AgregarCuentaMedico_2.this, VisualizarDatos.class));
-                                        finish();
-                                    } else {
-                                        Toast.makeText(AgregarCuentaMedico_2.this, "Hubo problemas al realizar el Registro", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-
-                        } else {
-
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {//si se presenta una colisión
-                                Toast.makeText(AgregarCuentaMedico_2.this, "El Usuario ya se encuentra registrado", Toast.LENGTH_SHORT).show();
-                            } else {
-                                //Toast.makeText(MainActivity.this, "No se pudo registrar el usuario ", Toast.LENGTH_LONG).show();
-                                Toast.makeText(AgregarCuentaMedico_2.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                Log.e("Activity", "Problemas Error: " + task.getException().getMessage());
-
-                            }
-
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ubicacionDoctor.onResume();
     }
 
 
-    public void UbicacionActual() {
 
-        Log.e("Entrando ,,,,,,,, :" , "XXXXXXXXXXXXXX");
-
-        if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) &&
-                (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED)) {
-
-            ActivityCompat.requestPermissions(AgregarCuentaMedico_2.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-            //Log.e("No hay permiso" , "No hay permiso.....");
-            return;
-
-
-        }
-
-        fusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            latitudLongitud = new LatLng(location.getLatitude(),location.getLongitude());
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudLongitud, 15));
-                            mMap.addMarker(new MarkerOptions()
-                                    .title("Mi Ubicación")
-                                    .position(latitudLongitud));
-
-                          //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latitudLongitud));
-                            Log.e("Latitud :" , + location.getLatitude() + " Longitud : " + location.getLongitude());
-
-                        }
-                    }
-
-                });
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ubicacionDoctor.onPause();
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        //mMap = googleMap;
-        //if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        //        != PackageManager.PERMISSION_GRANTED ) {
-        //    return;
-        //}
-
-        //mMap.setMyLocationEnabled(true);
-        //LatLng referenciaLatLng= new LatLng(-12.117895, -77.025463);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(referenciaLatLng, 15));//18
 
         mMap = googleMap;
 
@@ -286,7 +217,7 @@ public class AgregarCuentaMedico_2 extends AppCompatActivity implements View.OnC
                             latitudLongitud = new LatLng(location.getLatitude(),location.getLongitude());
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudLongitud, 15));
                             mMap.addMarker(new MarkerOptions()
-                                    .title("Mi Ubicación")
+                                    .title(" Latitud : " + location.getLatitude() + " Longitud :" + location.getLongitude())
                                     .position(latitudLongitud)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
